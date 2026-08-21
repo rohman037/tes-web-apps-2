@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix tolls lengkap v1 dari ahmaddavid0906",
+  "description": "Imported from GitHub: globallensn-cpu/tollsv1sistem",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

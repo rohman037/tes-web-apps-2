@@ -1,0 +1,48 @@
+[
+  {
+    "id": "cli_001",
+    "accessCode": "SATSET-882194",
+    "name": "Rizky Ramadhan",
+    "whatsapp": "081234567890",
+    "email": "rizky@gmail.com",
+    "packageId": "bulanan",
+    "packageName": "Akses Bulanan (VIP)",
+    "price": 149000,
+    "startDate": "2026-08-01T10:00:00.000Z",
+    "expiryDate": "2026-08-31T10:00:00.000Z",
+    "status": "active",
+    "type": "standard",
+    "lastLoginAt": "2026-08-06T08:00:00.000Z",
+    "toolUsage": {
+      "tiktokDownloader": 12,
+      "contentIdeas": 8,
+      "videoToPrompt": 15,
+      "photoPrompt": 6,
+      "frameExtractor": 4
+    },
+    "createdAt": "2026-08-01T10:00:00.000Z"
+  },
+  {
+    "id": "cli_002",
+    "accessCode": "SATSET-331209",
+    "name": "Budi Santoso",
+    "whatsapp": "085711223344",
+    "email": "budi.santoso@yahoo.com",
+    "packageId": "mingguan",
+    "packageName": "Akses Mingguan",
+    "price": 49000,
+    "startDate": "2026-08-02T12:00:00.000Z",
+    "expiryDate": "2026-08-09T12:00:00.000Z",
+    "status": "expiring_soon",
+    "type": "standard",
+    "lastLoginAt": "2026-08-05T14:30:00.000Z",
+    "toolUsage": {
+      "tiktokDownloader": 5,
+      "contentIdeas": 3,
+      "videoToPrompt": 4,
+      "photoPrompt": 2,
+      "frameExtractor": 1
+    },
+    "createdAt": "2026-08-02T12:00:00.000Z"
+  }
+]

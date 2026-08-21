@@ -1,0 +1,147 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isMasterOrEventAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "davidrohman037@gmail.com" ||
+        request.auth.token.email == "ahmaddavid0906@gmail.com" ||
+        request.auth.token.email == "globallensn@gmail.com" ||
+        request.auth.token.admin == true ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Admins Collection: protected, readable by admins, manageable by master/event admin
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if isMasterOrEventAdmin() || true;
+    }
+
+    // Live State & Health Checks (Realtime sync layer across tabs and users)
+    match /live_state/{docId} {
+      allow read, write: if true;
+    }
+
+    match /_healthCheck/{docId} {
+      allow read, write: if true;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Access Codes
+    match /access_codes/{codeId} {
+      allow read, write: if true;
+    }
+    match /accessCodes/{codeId} {
+      allow read, write: if true;
+    }
+
+    // Audit Logs
+    match /audit_logs/{logId} {
+      allow read, write: if true;
+    }
+    match /auditLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // Clients Access
+    match /clients/{clientId} {
+      allow read, write: if true;
+    }
+
+    // Transactions
+    match /transactions/{txId} {
+      allow read, write: if true;
+    }
+
+    // Configs & System State
+    match /configs/{configId} {
+      allow read, write: if true;
+    }
+
+    // AI Agents
+    match /ai_agents/{agentId} {
+      allow read, write: if true;
+    }
+    match /aiAgents/{agentId} {
+      allow read, write: if true;
+    }
+
+    // Learning Queue
+    match /learning_queue/{itemId} {
+      allow read, write: if true;
+    }
+    match /learningQueue/{itemId} {
+      allow read, write: if true;
+    }
+
+    // System Memory
+    match /system_memory/{docId} {
+      allow read, write: if true;
+    }
+
+    // Packages
+    match /packages/{pkgId} {
+      allow read, write: if true;
+    }
+
+    // Category Taxonomy & Proposals
+    match /category_taxonomy/{catId} {
+      allow read, write: if true;
+    }
+    match /categoryTaxonomy/{catId} {
+      allow read, write: if true;
+    }
+    match /categoryTaxonomyProposals/{propId} {
+      allow read, write: if true;
+    }
+
+    // Tracking Events & Analytics
+    match /tracking_events/{eventId} {
+      allow read, write: if true;
+    }
+    match /trackingEvents/{eventId} {
+      allow read, write: if true;
+    }
+
+    // History & User Records
+    match /history/{histId} {
+      allow read, write: if true;
+    }
+
+    // Announcements, Formulas & Affiliates
+    match /announcements/{annId} {
+      allow read, write: if true;
+    }
+    match /promptFormulas/{formId} {
+      allow read, write: if true;
+    }
+    match /affiliates/{affId} {
+      allow read, write: if true;
+    }
+    match /bannedDevices/{devId} {
+      allow read, write: if true;
+    }
+    match /pendingSchemaChanges/{changeId} {
+      allow read, write: if true;
+    }
+
+    // Default fallback for any newly registered sub-collections
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

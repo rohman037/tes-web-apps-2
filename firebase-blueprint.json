@@ -1,0 +1,120 @@
+{
+  "entities": {
+    "Admin": {
+      "title": "Admin",
+      "description": "Super admin and event administrator profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "name": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["master_admin", "event_admin", "moderator"] },
+        "isEventAdmin": { "type": "boolean" },
+        "permissions": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered app user and event participant profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "name": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["user", "vip_creator", "participant", "admin"] },
+        "assignedEventId": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["active", "suspended", "expired"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "AccessCode": {
+      "title": "AccessCode",
+      "description": "Event and VIP tool access codes with quota limits",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "maxLength": 64 },
+        "note": { "type": "string", "maxLength": 256 },
+        "clientName": { "type": "string", "maxLength": 128 },
+        "quotaLimit": { "type": "number" },
+        "quotaUsed": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "suspended", "expired"] },
+        "createdBy": { "type": "string", "maxLength": 256 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Event management and system security audit trail",
+      "type": "object",
+      "properties": {
+        "adminEmail": { "type": "string", "maxLength": 256 },
+        "adminName": { "type": "string", "maxLength": 128 },
+        "action": { "type": "string", "maxLength": 256 },
+        "details": { "type": "string", "maxLength": 4096 },
+        "category": { "type": "string", "enum": ["package", "client", "apikey", "qris", "system", "event_admin", "security"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["action", "timestamp"]
+    },
+    "ClientAccess": {
+      "title": "ClientAccess",
+      "description": "Client access controls and subscription allocations",
+      "type": "object",
+      "properties": {
+        "accessCode": { "type": "string", "maxLength": 64 },
+        "clientName": { "type": "string", "maxLength": 128 },
+        "packageName": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["active", "suspended", "expired"] },
+        "quotaLimit": { "type": "number" },
+        "quotaUsed": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["accessCode", "clientName"]
+    },
+    "LiveState": {
+      "title": "LiveState",
+      "description": "Real-time application broadcast, maintenance and event live state",
+      "type": "object",
+      "properties": {
+        "isMaintenance": { "type": "boolean" },
+        "activeBroadcastMessage": { "type": "string", "maxLength": 1024 },
+        "currentEventStatus": { "type": "string", "enum": ["live", "standby", "ended"] },
+        "eventAdminEmail": { "type": "string", "maxLength": 256 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["updatedAt"]
+    }
+  },
+  "firestore": {
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Master and Event Administrators"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and event participants"
+    },
+    "/access_codes/{codeId}": {
+      "schema": { "$ref": "#/entities/AccessCode" },
+      "description": "VIP Access codes and event ticket authorizations"
+    },
+    "/audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Audit and login logs"
+    },
+    "/clients/{clientId}": {
+      "schema": { "$ref": "#/entities/ClientAccess" },
+      "description": "Client access control records"
+    },
+    "/live_state/{stateId}": {
+      "schema": { "$ref": "#/entities/LiveState" },
+      "description": "Real-time state and broadcast messages"
+    }
+  }
+}

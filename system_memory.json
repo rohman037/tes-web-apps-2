@@ -1,0 +1,23 @@
+{
+  "totalExecutions": 18,
+  "successfulPromptsCount": 18,
+  "learnedKnowledgeBase": [
+    "Gunakan Hook verbal 3 detik pertama dengan pertanyaan retoris, statistik emosional, atau aksi visual langsung.",
+    "Sertakan parameter sinematik 4k/8k commercial softbox diffusion & gerakan kamera pan/zoom halus untuk video AI.",
+    "Gunakan hashtag kombinasi: 3 hashtag spesifik produk + 4 hashtag niche audiens + 3 hashtag viral FYP.",
+    "Pecah adegan video per 5-10 detik agar pergantian visual tetap dinamis dan retention rate penonton tinggi.",
+    "Sebutkan pain-point utama audiens di kalimat pertama caption dan tutup dengan Call-to-Action (CTA) jelas ke keranjang kuning/pembelian."
+  ],
+  "viralHookPatterns": [
+    "\"Jangan beli produk ini sebelum tahu 3 rahasia ini!\"",
+    "\"Jujur aku nyesel banget baru tahu barang ini sekarang...\"",
+    "\"POV: Kamu nemu barang kecil yang bisa bikin hidup 10x lebih praktis.\""
+  ],
+  "categoryUsage": {
+    "videoPrompt": 7,
+    "contentIdeas": 6,
+    "photoPrompt": 5
+  },
+  "formulas": [],
+  "lastUpdated": "2026-08-06T13:43:00.000Z"
+}

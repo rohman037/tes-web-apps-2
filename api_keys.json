@@ -1,0 +1,46 @@
+{
+  "keys": [
+    {
+      "id": "key_01",
+      "key": "AIzaSyB3_demo_key_satset_01_pro_engine",
+      "alias": "Primary Gemini Flash Key",
+      "dailyLimit": 1000,
+      "dailyUsage": 142,
+      "monthlyLimit": 30000,
+      "monthlyUsage": 2840,
+      "status": "active",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "lastUsedAt": "2026-08-06T12:10:00.000Z"
+    },
+    {
+      "id": "key_02",
+      "key": "AIzaSyC7_backup_key_satset_02_rotation",
+      "alias": "Backup Gemini Key #2",
+      "dailyLimit": 1000,
+      "dailyUsage": 38,
+      "monthlyLimit": 30000,
+      "monthlyUsage": 910,
+      "status": "active",
+      "createdAt": "2026-08-01T00:00:00.000Z",
+      "lastUsedAt": "2026-08-06T11:45:00.000Z"
+    }
+  ],
+  "logs": [
+    {
+      "id": "log_101",
+      "keyId": "key_01",
+      "keyMasked": "AIzaSy...01_pro",
+      "endpoint": "/api/generate-content-ideas",
+      "timestamp": "2026-08-06T12:10:00.000Z",
+      "status": "success"
+    },
+    {
+      "id": "log_102",
+      "keyId": "key_01",
+      "keyMasked": "AIzaSy...01_pro",
+      "endpoint": "/api/generate-video-prompt",
+      "timestamp": "2026-08-06T12:05:00.000Z",
+      "status": "success"
+    }
+  ]
+}
