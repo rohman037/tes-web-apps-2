@@ -93,7 +93,7 @@ async function startServer() {
   await nextApp.prepare();
 
   const app = express();
-  const PORT = process.env.PORT || 3000;
+  const PORT: number = Number(process.env.PORT) || 3000;
 
   // Initialize DB seed on server startup (non-blocking safe fallback)
   try {
