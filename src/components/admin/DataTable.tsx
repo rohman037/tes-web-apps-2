@@ -68,7 +68,7 @@ export default function DataTable<T extends { id?: string | number }>({
               </tr>
             ) : (
               safeData.map((item, rowIdx) => (
-                <tr key={item.id ? `${item.id}-${rowIdx}` : `row-${rowIdx}`} className="hover:bg-indigo-50/30 transition-colors">
+                <tr key={item.id || rowIdx} className="hover:bg-indigo-50/30 transition-colors">
                   {columns.map((col, colIdx) => (
                     <td key={colIdx} className={`px-4 py-3.5 align-middle text-slate-700 ${col.className || ''}`}>
                       {col.render ? col.render(item, rowIdx) : (col.accessor ? String(item[col.accessor] ?? '') : '')}

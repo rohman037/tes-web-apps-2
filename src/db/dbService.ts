@@ -128,7 +128,17 @@ const DEFAULT_QRIS: QrisConfig = {
 };
 const DEFAULT_TRANSACTIONS: Transaction[] = [];
 
-export const ALL_23_AI_AGENTS: AiAgentItem[] = [...DEFAULT_AI_AGENTS];
+export const ALL_23_AI_AGENTS: AiAgentItem[] = [
+  ...DEFAULT_AI_AGENTS,
+  {
+    id: 'agent_ingestion_monitor',
+    name: 'Agent Monitor Ingestion & URL Fetcher',
+    role: 'Memantau URL/submission baru',
+    model: 'gemini-3.1-flash-lite',
+    status: 'active',
+    callsCount: 32, approvedPatternsCount: 0, rejectedPatternsCount: 0,
+  }
+];
 
 export async function initDbSeed() {
   console.log('[DbService] initDbSeed (Firestore) completed.');

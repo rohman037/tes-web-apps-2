@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, DragEvent, ChangeEvent } from 'react';
+import React, { useState, useEffect, useRef, DragEvent, ChangeEvent, useCallback } from "react";
 import { 
   Lightbulb, 
   Sparkles, 
@@ -368,6 +368,12 @@ export default function ContentIdeasTool({
       setError('Mohon unggah file video yang valid.');
       return;
     }
+    
+    if (selectedFile.size > 20 * 1024 * 1024) {
+      setError('Ukuran file video terlalu besar (maksimal 20MB) karena batasan server untuk analisis AI. Gunakan video yang lebih pendek atau ekstrak tautan TikTok.');
+      return;
+    }
+
     setFile(selectedFile);
     const url = URL.createObjectURL(selectedFile);
     setPreviewUrl(url);

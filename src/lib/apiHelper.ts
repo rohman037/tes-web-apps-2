@@ -266,11 +266,15 @@ export async function safeParseJson<T = any>(res: Response): Promise<T> {
     if (res.status === 429 || res.status === 403 || text.includes('RESOURCE_EXHAUSTED') || text.includes('API_KEY_INVALID')) {
       throw new Error('Semua API Key dalam pool telah habis atau terkena limit (429/403). Silakan masukkan API Key baru di menu Pengaturan API Key.');
     }
-    if (text.startsWith('<') || text.toLowerCase().includes('<!doctype html>')) {
+    if (text.trim().startsWith('<') || text.toLowerCase().includes('<!doctype html>') || text.toLowerCase().includes('<html')) {
       if (res.status === 413) {
-        throw new Error('Ukuran data file terlalu besar. Silakan gunakan file di bawah 50MB.');
+        throw new Error('Ukuran data file terlalu besar. Silakan gunakan file di bawah 20MB.');
       }
       throw new Error(`Server mengalami masalah (${res.status}). Silakan coba lagi.`);
+    }
+    
+    if (res.status === 413) {
+      throw new Error('Ukuran data file terlalu besar. Silakan gunakan file di bawah 20MB.');
     }
     throw new Error(text || `HTTP Error ${res.status}`);
   }

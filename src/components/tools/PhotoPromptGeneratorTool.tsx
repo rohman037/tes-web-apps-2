@@ -154,6 +154,12 @@ export default function PhotoPromptGeneratorTool({ initialConcept, initialNegati
   const handleFileSelection = (file: File) => {
     setError(null);
     setGeneratedPrompt(null);
+    
+    if (file.size > 20 * 1024 * 1024) {
+      setError('Ukuran file gambar terlalu besar (maksimal 20MB). Gunakan gambar dengan resolusi lebih rendah.');
+      return;
+    }
+    
     setImageFile(file);
     const url = URL.createObjectURL(file);
     setImagePreviewUrl(url);

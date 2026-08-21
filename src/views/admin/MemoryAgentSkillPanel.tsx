@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import { 
   Brain, 
   Sparkles, 
@@ -221,14 +221,11 @@ export default function MemoryAgentSkillPanel() {
 
           // Append mandatory guardrail skill if missing
           const hasGuardrail = mapped.some(m => m.category === 'guardrail');
-          const combined = !hasGuardrail ? [...INITIAL_SKILL_BUBBLES, ...mapped] : mapped;
-          const seen = new Set<string>();
-          const uniqueSkills = combined.filter(s => {
-            if (seen.has(s.id)) return false;
-            seen.add(s.id);
-            return true;
-          });
-          setSkills(uniqueSkills);
+          if (!hasGuardrail) {
+            setSkills([...INITIAL_SKILL_BUBBLES, ...mapped]);
+          } else {
+            setSkills(mapped);
+          }
         }
       }
     } catch (e) {
@@ -640,7 +637,7 @@ HASIL HASIL HASIL OUTPUT AI AGENT (DILENGKAPI SKILL MEMORI):
             ) : (
               filteredSkills.map((skill, index) => (
                 <motion.div
-                  key={`bubble-${skill.id}-${index}`}
+                  key={skill.id}
                   whileHover={{ scale: 1.08, y: -6 }}
                   whileTap={{ scale: 0.95 }}
                   animate={{ 
@@ -706,9 +703,9 @@ HASIL HASIL HASIL OUTPUT AI AGENT (DILENGKAPI SKILL MEMORI):
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredSkills.map((skill, index) => (
+            {filteredSkills.map((skill) => (
               <div 
-                key={`matrix-${skill.id}-${index}`}
+                key={skill.id}
                 className={`p-5 rounded-2xl border transition-all space-y-3 relative ${
                   skill.isActive 
                     ? 'border-indigo-200 bg-slate-50/80 hover:bg-white hover:border-indigo-400 shadow-xs' 

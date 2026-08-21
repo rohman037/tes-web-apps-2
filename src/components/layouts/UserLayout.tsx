@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback, DragEvent, ChangeEvent } from 'react';
+import React, { useState, useRef, useEffect, DragEvent, ChangeEvent, useCallback } from "react";
 import { 
   Upload, 
   FileVideo, 
@@ -442,6 +442,11 @@ export default function UserLayout({ session, onLogout, onGoToAdmin, initialTab 
     
     if (!selectedFile.type.startsWith('video/')) {
       setError('Mohon unggah file video yang valid.');
+      return;
+    }
+    
+    if (selectedFile.size > 20 * 1024 * 1024) {
+      setError('Ukuran file video terlalu besar (maksimal 20MB) karena batasan server untuk analisis AI. Gunakan video yang lebih pendek atau ekstrak tautan TikTok.');
       return;
     }
 

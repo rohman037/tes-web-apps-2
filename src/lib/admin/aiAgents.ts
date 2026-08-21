@@ -268,36 +268,23 @@ export const DEFAULT_AI_AGENTS: AiAgentItem[] = [
   },
 ];
 
-export function deduplicateAgents(list: AiAgentItem[]): AiAgentItem[] {
-  const seen = new Set<string>();
-  const result: AiAgentItem[] = [];
-  for (const item of list) {
-    if (item && item.id && !seen.has(item.id)) {
-      seen.add(item.id);
-      result.push(item);
-    }
-  }
-  return result;
-}
-
 export function getAiAgents(): AiAgentItem[] {
   try {
     const raw = typeof localStorage !== 'undefined' ? localStorage.getItem(LOCAL_STORAGE_AI_AGENTS_KEY) : null;
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        let deduped = deduplicateAgents(parsed);
-        let updated = deduped.length !== parsed.length;
+        let updated = false;
         DEFAULT_AI_AGENTS.forEach((def) => {
-          if (!deduped.some((a) => a.id === def.id)) {
-            deduped.push(def);
+          if (!parsed.some((a: any) => a.id === def.id)) {
+            parsed.push(def);
             updated = true;
           }
         });
         if (updated) {
-          saveAiAgents(deduped);
+          saveAiAgents(parsed);
         }
-        return deduped;
+        return parsed.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
       }
     }
   } catch (e) {}
@@ -317,13 +304,12 @@ export async function syncAiAgentsWithBackend(): Promise<AiAgentItem[]> {
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
-        const cleanData = deduplicateAgents(data);
         if (typeof localStorage !== 'undefined') {
-          localStorage.setItem(LOCAL_STORAGE_AI_AGENTS_KEY, JSON.stringify(cleanData));
-          localStorage.setItem('satset_ai_agents', JSON.stringify(cleanData));
+          localStorage.setItem(LOCAL_STORAGE_AI_AGENTS_KEY, JSON.stringify(data));
+          localStorage.setItem('satset_ai_agents', JSON.stringify(data));
           window.dispatchEvent(new Event('satset_ai_agents_updated'));
         }
-        return cleanData;
+        return data.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
       }
     }
   } catch (e) {
@@ -334,10 +320,9 @@ export async function syncAiAgentsWithBackend(): Promise<AiAgentItem[]> {
 
 export function saveAiAgents(agents: AiAgentItem[]): void {
   try {
-    const cleanAgents = deduplicateAgents(agents);
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(LOCAL_STORAGE_AI_AGENTS_KEY, JSON.stringify(cleanAgents));
-      localStorage.setItem('satset_ai_agents', JSON.stringify(cleanAgents));
+      localStorage.setItem(LOCAL_STORAGE_AI_AGENTS_KEY, JSON.stringify(agents));
+      localStorage.setItem('satset_ai_agents', JSON.stringify(agents));
       window.dispatchEvent(new Event('satset_ai_agents_updated'));
 
       const rawSession = localStorage.getItem('satset_user_session');
@@ -355,7 +340,7 @@ export function saveAiAgents(agents: AiAgentItem[]): void {
           'Content-Type': 'application/json',
           'x-access-code': accessCode
         },
-        body: JSON.stringify({ agents: cleanAgents })
+        body: JSON.stringify({ agents })
       }).catch(() => {});
     }
   } catch (e) {

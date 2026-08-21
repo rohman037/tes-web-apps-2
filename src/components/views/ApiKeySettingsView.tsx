@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import { Key, Sparkles, Trash2, Check, AlertCircle, Info, ShieldCheck, Lock, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 

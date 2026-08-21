@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import { Share2, Plus, Trash2, DollarSign, Users, Award, CheckCircle2, Copy } from 'lucide-react';
 
 export interface AffiliateItem {

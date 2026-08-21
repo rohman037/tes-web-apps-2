@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 import { 
   Bot, 
   Plus, 
@@ -194,7 +194,7 @@ export default function AiAgentPanel() {
     setShowAddModal(false);
   };
 
-  const safeAgents = Array.isArray(agents) ? agents : DEFAULT_AI_AGENTS;
+  const safeAgents = (Array.isArray(agents) ? agents : DEFAULT_AI_AGENTS).filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
   const activeCount = safeAgents.filter(a => a.status === 'active').length;
   const totalCalls = safeAgents.reduce((acc, curr) => acc + (curr.callsCount || 0), 0);
   const totalApproved = safeAgents.reduce((acc, curr) => acc + (curr.approvedPatternsCount || 0), 0);

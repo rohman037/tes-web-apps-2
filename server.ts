@@ -93,7 +93,7 @@ async function startServer() {
   await nextApp.prepare();
 
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   // Initialize DB seed on server startup (non-blocking safe fallback)
   try {
@@ -102,18 +102,17 @@ async function startServer() {
     logger.warn('[DbService] initDbSeed failed on startup (continuing with cache):', err);
   }
 
-  // Increase payload limits for base64 video data on API routes only
-  // Do not parse body globally so Next.js internal requests (_next, devtools, dev indicators) receive unconsumed streams
-  app.use('/api', express.json({ limit: '100mb' }));
-  app.use('/api', express.urlencoded({ limit: '100mb', extended: true }));
+  // Increase payload limits for base64 video data
+  app.use(express.json({ limit: '100mb' }));
+  app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
   // Enable trust proxy for Google Cloud Run / Nginx reverse proxy so req.ip reflects actual client IP
-  app.set('trust proxy', 1);
+  app.set('trust proxy', true);
 
   // Apply Global API Rate Limiter to prevent DoS and quota drain with reasonable thresholds and real-time exemptions
   const apiLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minute window
-    max: 600, // Up to 600 requests per minute per client IP
+    max: 60000, // Up to 600 requests per minute per client IP
     message: { error: 'Terlalu banyak permintaan (Rate limit). Silakan coba lagi sebentar lagi.' },
     standardHeaders: true,
     legacyHeaders: false,
